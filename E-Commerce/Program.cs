@@ -1,10 +1,16 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using E_Commerce.Business;
+using E_Commerce.Models;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
+builder.Services.Configure<BooksDatabaseSettings>(builder.Configuration.GetSection("BooksDatabase"));
 
+builder.Services.AddTransient<BooksServices>();
+
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
